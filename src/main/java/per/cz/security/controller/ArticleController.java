@@ -5,14 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import per.cz.security.entity.ArticleInfo;
 import per.cz.security.entity.PluginPage;
-import per.cz.security.entity.RankDO;
-import per.cz.security.entity.RankDto;
 import per.cz.security.result.ResultData;
 import per.cz.security.service.ArticleServiceI;
-import per.cz.security.service.impl.RankListComponent;
-import per.cz.security.util.BeanUtil;
 
-import java.util.List;
 
 /**
  * 文章

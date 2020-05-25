@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Data
 public class LoginUser extends UserDto implements UserDetails {
 
 	private static final long serialVersionUID = -1379274258881257107L;
@@ -23,7 +22,31 @@ public class LoginUser extends UserDto implements UserDetails {
 	/** 过期时间戳 */
 	private Long expireTime;
 
+	public List<Permission> getPermissions() {
+		return permissions;
+	}
 
+	public void setPermissions(List<Permission> permissions) {
+		this.permissions = permissions;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	@Override
+	public String toString() {
+		return "LoginUser{" +
+				"permissions=" + permissions +
+				", token='" + token + '\'' +
+				", loginTime=" + loginTime +
+				", expireTime=" + expireTime +
+				'}';
+	}
 
 	@Override
 	@JsonIgnore
@@ -43,6 +66,8 @@ public class LoginUser extends UserDto implements UserDetails {
 		return true;
 	}
 
+	// 账户是否未锁定
+	@JsonIgnore
 	@Override
 	public boolean isAccountNonLocked() {
 		return true;
@@ -62,6 +87,21 @@ public class LoginUser extends UserDto implements UserDetails {
 		return true;
 	}
 
+	public Long getLoginTime() {
+		return loginTime;
+	}
+
+	public void setLoginTime(Long loginTime) {
+		this.loginTime = loginTime;
+	}
+
+	public Long getExpireTime() {
+		return expireTime;
+	}
+
+	public void setExpireTime(Long expireTime) {
+		this.expireTime = expireTime;
+	}
 
 
 }

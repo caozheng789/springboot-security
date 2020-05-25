@@ -38,7 +38,9 @@ public class TokenFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		String token = getToken(request);
 		if (StringUtils.isNotBlank(token)) {
+
 			LoginUser loginUser = tokenService.getLoginUser(token);
+			System.out.println(loginUser);
 			if (loginUser != null) {
 				loginUser = checkLoginTime(loginUser);
 				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(loginUser,

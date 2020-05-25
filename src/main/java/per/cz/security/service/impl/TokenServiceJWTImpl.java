@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -15,7 +16,9 @@ import org.springframework.stereotype.Service;
 import per.cz.security.entity.LoginUser;
 import per.cz.security.entity.Token;
 import per.cz.security.service.TokenService;
+import per.cz.security.util.BeanUtil;
 
+import javax.annotation.Resource;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
@@ -42,7 +45,7 @@ public class TokenServiceJWTImpl implements TokenService {
 	private Integer expireSeconds;
 
 	@Autowired
-	private RedisTemplate redisTemplate;
+	private RedisTemplate<String, LoginUser> redisTemplate;
 
 	/**
 	 * 私钥
@@ -71,7 +74,8 @@ public class TokenServiceJWTImpl implements TokenService {
 	 */
 	private String createJWTToken(LoginUser loginUser) {
 		Map<String, Object> claims = new HashMap<>();
-		claims.put(LOGIN_USER_KEY, loginUser.getToken());// 放入一个随机字符串，通过该串可找到登陆用户
+		// 放入一个随机字符串，通过该串可找到登陆用户
+		claims.put(LOGIN_USER_KEY, loginUser.getToken()+"");
 
 		String jwtToken = Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS256, getKeyInstance())
 				.compact();
@@ -98,7 +102,7 @@ public class TokenServiceJWTImpl implements TokenService {
 	public LoginUser getLoginUser(String jwtToken) {
 		String uuid = getUUIDFromJWT(jwtToken);
 		if (uuid != null) {
-			return (LoginUser) redisTemplate.boundValueOps(getTokenKey(uuid)).get();
+			return  redisTemplate.boundValueOps(getTokenKey(uuid)).get();
 		}
 
 		return null;
