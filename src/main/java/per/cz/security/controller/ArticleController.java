@@ -52,6 +52,15 @@ public class ArticleController {
 	}
 
 
+	/**
+	 * 发布博客
+	 * @return
+	 */
+	@PostMapping("putBlog")
+	public ResultData putBlog(ArticleInfo article){
+		return artService.putBlog(article);
+	}
+
 
 
 }

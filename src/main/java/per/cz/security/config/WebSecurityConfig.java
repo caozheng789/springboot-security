@@ -97,7 +97,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
 		//禁用csrf
 		http.csrf().disable()
-		.cors()
+		.cors().configurationSource(CorsConfigurationSource())
 		.and().servletApi().disable().requestCache().disable();
 
 		// 基于token，所以不需要session  禁用session
@@ -141,5 +141,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		//注入用户信息 配置查询用户信息
 		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+	}
+
+
+	//配置跨域访问资源
+	private CorsConfigurationSource CorsConfigurationSource() {
+		CorsConfigurationSource source =   new UrlBasedCorsConfigurationSource();
+		CorsConfiguration corsConfiguration = new CorsConfiguration();
+		corsConfiguration.addAllowedOrigin("*");	//同源配置，*表示任何请求都视为同源，若需指定ip和端口可以改为如“localhost：8080”，多个以“，”分隔；
+		corsConfiguration.addAllowedHeader("*");//header，允许哪些header，本案中使用的是token，此处可将*替换为token；
+		corsConfiguration.addAllowedMethod("*");	//允许的请求方法，PSOT、GET等
+		((UrlBasedCorsConfigurationSource) source).registerCorsConfiguration("/**",corsConfiguration); //配置允许跨域访问的url
+		return source;
 	}
 }

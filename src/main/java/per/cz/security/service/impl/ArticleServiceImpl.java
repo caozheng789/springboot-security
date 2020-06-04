@@ -3,6 +3,7 @@ package per.cz.security.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.ResultType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import per.cz.security.result.ResultData;
 import per.cz.security.service.ArticleServiceI;
 import per.cz.security.util.BeanUtil;
 import per.cz.security.util.HtmlToText;
+import per.cz.security.util.UserUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +47,7 @@ public class ArticleServiceImpl implements ArticleServiceI {
 			if (list.size() != 0){
 				for ( ArticleInfo art : list) {
 					//菜单名回填
-					getMenuName(art);
+					//getMenuName(art);
 
 					//把富文本中的img拿出来做首页展示
 					List<String> data = HtmlToText.getImageSrc(art.getData());
@@ -85,7 +87,7 @@ public class ArticleServiceImpl implements ArticleServiceI {
         try {
 					articleInfo = articleMapper.selectById(artId);
 					if (null != articleInfo){
-						getMenuName(articleInfo);
+						//getMenuName(articleInfo);
 						//将被请求的文章放入redis,排行榜
 						RankDO rank = rankListComponent.getRank(artId);
 						if (rank.getRank() == -1){
@@ -122,6 +124,30 @@ public class ArticleServiceImpl implements ArticleServiceI {
 			dtos.add(rankDto);
 		}
 		return ResultData.success(dtos);
+	}
+
+
+	/**
+	 * 发布博客
+	 * @param article
+	 * @return
+	 */
+	@Override
+	public ResultData putBlog(ArticleInfo article) {
+		LoginUser loginUser = UserUtil.getLoginUser();
+		if (null == loginUser ){
+			return ResultData.success("请先登录~");
+		}
+		article.setUserName(loginUser.getId()+"");
+		Long id;
+		try {
+			int insert = articleMapper.insert(article);
+			id = article.getId();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResultData.error(e.getMessage());
+		}
+		return ResultData.success(id+"");
 	}
 
 

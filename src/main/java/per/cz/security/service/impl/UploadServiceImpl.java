@@ -29,11 +29,11 @@ public class UploadServiceImpl implements UploadServiceI {
 	private UploadMapper uploadSqlMapper;
 
 	@Override
-	public String uploadImg(MultipartFile file) {
+	public ResultData uploadImg(MultipartFile file) {
 		Qiniu qiniu = uploadSqlMapper.selectOne(null);
 
 		if (null == qiniu){
-			return "图片服务器异常~";
+			return ResultData.error("图片服务器异常~");
 		}
 
 		//图片服务器地址
@@ -52,9 +52,9 @@ public class UploadServiceImpl implements UploadServiceI {
 			Response response = uploadManager.put(file.getInputStream(), fileKey, token, null, null);
 
 		} catch (IOException e) {
-			return e.getMessage();
+			return ResultData.error(e.getMessage());
 		}
-		return qiniu.getDomain() + fileKey;
+		return ResultData.success(qiniu.getDomain() + fileKey);
 	}
 
 	@Override

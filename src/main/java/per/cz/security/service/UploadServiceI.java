@@ -9,7 +9,7 @@ import per.cz.security.result.ResultData;
  */
 public interface UploadServiceI {
 
-	String uploadImg(MultipartFile file);
+	ResultData uploadImg(MultipartFile file);
 
 	/**
 	 * 添加七牛云服务器信息

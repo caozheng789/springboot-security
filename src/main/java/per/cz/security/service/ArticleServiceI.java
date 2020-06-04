@@ -16,5 +16,5 @@ public interface ArticleServiceI {
 
 	ResultData getTopNRanks();
 
-
+	ResultData putBlog(ArticleInfo article);
 }
