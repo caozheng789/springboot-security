@@ -48,7 +48,7 @@ public class UploadController  {
 	}
 
 	@PostMapping("uploadImg")
-	public String uploadImg(MultipartFile file){
+	public ResultData uploadImg(MultipartFile file){
 		return uploadService.uploadImg(file);
 	}
 

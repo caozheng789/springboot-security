@@ -13,6 +13,7 @@ import per.cz.security.result.ResultData;
 import per.cz.security.service.ArticleServiceI;
 import per.cz.security.util.BeanUtil;
 import per.cz.security.util.HtmlToText;
+import per.cz.security.util.UserUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,6 +123,13 @@ public class ArticleServiceImpl implements ArticleServiceI {
 			dtos.add(rankDto);
 		}
 		return ResultData.success(dtos);
+	}
+
+	@Override
+	public ResultData pusArticle(String title, String data) {
+		Integer id = UserUtil.getLoginUser().getId();
+		System.out.println(id);
+		return ResultData.success(id);
 	}
 
 

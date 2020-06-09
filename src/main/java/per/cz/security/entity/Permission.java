@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @ToString
@@ -17,6 +18,8 @@ public class Permission extends BaseEntity<Long> implements Serializable {
 	private Integer type;
 	private String permission;
 	private Integer sort;
+
+	private List<Permission> child;
 
 
 }

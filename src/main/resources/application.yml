@@ -10,7 +10,7 @@ spring:
       prefix: /WEB-INF/views/
       suffix: .jsp
   datasource:
-    url: jdbc:mysql://localhost:3306/time_line?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://localhost:3306/time_line?useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
@@ -34,6 +34,11 @@ token:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#elasticsearch配置
+elastic-search:
+  hostName: 188.131.221.99
+  port: 9200
 
 
 
