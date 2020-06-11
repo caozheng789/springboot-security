@@ -14,7 +14,6 @@ import per.cz.security.mapper.UploadMapper;
 import per.cz.security.result.ResultData;
 import per.cz.security.service.UploadServiceI;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -34,7 +33,7 @@ public class UploadServiceImpl implements UploadServiceI {
 		Qiniu qiniu = uploadSqlMapper.selectOne(null);
 
 		if (null == qiniu){
-			return ResultData.success("图片服务器异常~");
+			return ResultData.error("图片服务器异常~");
 		}
 
 		//图片服务器地址
@@ -51,13 +50,11 @@ public class UploadServiceImpl implements UploadServiceI {
 			String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
 			fileKey = UUID.randomUUID().toString() + suffix;
 			Response response = uploadManager.put(file.getInputStream(), fileKey, token, null, null);
-			System.out.println(response);
+
 		} catch (IOException e) {
 			return ResultData.error(e.getMessage());
 		}
-
-		System.out.println(qiniu.getDomain() + File.separator +fileKey);
-		return ResultData.success(qiniu.getDomain() + File.separator +fileKey);
+		return ResultData.success(qiniu.getDomain() + fileKey);
 	}
 
 	@Override

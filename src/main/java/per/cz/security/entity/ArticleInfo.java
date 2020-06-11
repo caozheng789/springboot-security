@@ -14,10 +14,8 @@ import java.util.Date;
 @Data
 @TableName(value = "article_info")
 @ToString
-public class ArticleInfo {
+public class ArticleInfo extends BaseEntity<Long> {
 
-    @Id
-    private Integer id;
 
     private String userName;
 
@@ -35,9 +33,6 @@ public class ArticleInfo {
      */
     private String artSubMenu;
 
-    private Date createTime;
-
-    private Date updateTime;
 
     private String data;
 

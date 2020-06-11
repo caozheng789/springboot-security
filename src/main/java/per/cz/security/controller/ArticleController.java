@@ -43,12 +43,22 @@ public class ArticleController {
 
 
 	/**
-	 * 获取排行榜
+	 * 获取所有用户的时间线
 	 * @return
 	 */
 	@GetMapping(value = "getTopNRanks")
 	public ResultData getTopNRanks(){
 		return artService.getTopNRanks();
+	}
+
+
+	/**
+	 * 发布博客
+	 * @return
+	 */
+	@PostMapping("putBlog")
+	public ResultData putBlog(ArticleInfo article){
+		return artService.putBlog(article);
 	}
 
 
