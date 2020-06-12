@@ -63,8 +63,9 @@ public class PermissionController {
 	 * @param permissions
 	 */
 	private void setChild(Permission p, List<Permission> permissions) {
-		List<Permission> child = permissions.parallelStream().filter(a -> a.getParentId().equals(p.getId())).collect(Collectors.toList());
-		p.setChild(child);
+		List<Permission> child = permissions.parallelStream().filter(a -> a.getParentId().equals(p.getId()))
+				.collect(Collectors.toList());
+		p.setChildren(child);
 		if (!CollectionUtils.isEmpty(child)) {
 			child.parallelStream().forEach(c -> {
 				//递归设置子元素，多级菜单支持
@@ -104,7 +105,7 @@ public class PermissionController {
 	 * @return
 	 */
 	@GetMapping
-	@PreAuthorize("hasAuthority('sys:menu:query')")
+//	@PreAuthorize("hasAuthority('sys:menu:query')")
 	public List<Permission> permissionsList() {
 		List<Permission> permissionsAll = permissionDao.listAll();
 
@@ -119,12 +120,11 @@ public class PermissionController {
 	 * @return
 	 */
 	@GetMapping("/all")
-	@PreAuthorize("hasAuthority('sys:menu:query')")
+	//@PreAuthorize("hasAuthority('sys:menu:query')")
 	public JSONArray permissionsAll() {
 		List<Permission> permissionsAll = permissionDao.listAll();
 		JSONArray array = new JSONArray();
 		setPermissionsTree(0L, permissionsAll, array);
-
 		return array;
 	}
 
@@ -156,7 +156,7 @@ public class PermissionController {
 
 				if (permissionsAll.stream().filter(p -> p.getParentId().equals(per.getId())).findAny() != null) {
 					JSONArray child = new JSONArray();
-					parent.put("child", child);
+					parent.put("children", child);
 					setPermissionsTree(per.getId(), permissionsAll, child);
 				}
 			}
