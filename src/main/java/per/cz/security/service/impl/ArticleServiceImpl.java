@@ -118,10 +118,12 @@ public class ArticleServiceImpl implements ArticleServiceI {
 			RankDto rankDto = new RankDto();
 			BeanUtil.copyNotNullBean(r,rankDto);
 			ArticleInfo articleInfo = articleMapper.selectById(r.getUserId());
-			rankDto.setTitle(articleInfo.getTitle());
-			//取出绝对值
-			rankDto.setScore(Math.abs(rankDto.getScore()));
-			dtos.add(rankDto);
+			if (null !=  articleInfo){
+				rankDto.setTitle(articleInfo.getTitle());
+				//取出绝对值
+				rankDto.setScore(Math.abs(rankDto.getScore()));
+				dtos.add(rankDto);
+			}
 		}
 		return ResultData.success(dtos);
 	}

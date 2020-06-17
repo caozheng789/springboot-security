@@ -33,7 +33,7 @@ public class ArticleController {
 	}
 
 	/**
-	 * 获取所有用户的时间线
+	 * 根据id获取文章
 	 * @return
 	 */
 	@GetMapping(value = "getArticleById")

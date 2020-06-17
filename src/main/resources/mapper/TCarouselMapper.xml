@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="per.cz.security.mapper.TCarouselDao">
+
+	<sql id="where">
+		<where>
+			<if test="params.id != null and params.id != ''">
+				and id = #{params.id} 
+			</if>
+			<if test="params.status != null and params.status != ''">
+				and status = #{params.status} 
+			</if>
+			<if test="params.sorting != null and params.sorting != ''">
+				and sorting = #{params.sorting} 
+			</if>
+			<if test="params.createTime != null and params.createTime != ''">
+				and create_time = #{params.createTime} 
+			</if>
+			<if test="params.updateTime != null and params.updateTime != ''">
+				and update_time = #{params.updateTime} 
+			</if>
+			<if test="params.imgUrl != null and params.imgUrl != ''">
+				and img_url = #{params.imgUrl} 
+			</if>
+		
+		</where>
+	</sql>
+
+	<select id="count" resultType="int">
+		select count(1) from t_carousel t
+		<include refid="where" />
+	</select>
+
+	<select id="list" resultType="per.cz.security.entity.TCarousel">
+		select * from t_carousel t
+		<include refid="where" />
+		${params.orderBy}
+		limit #{offset}, #{limit}
+	</select>
+
+	<update id="update">
+		update t_carousel t
+		<set>
+			<if test="status != null">
+				status = #{status}, 
+			</if>
+			<if test="sorting != null">
+				sorting = #{sorting}, 
+			</if>
+			<if test="create_time != null">
+				create_time = #{createTime}, 
+			</if>
+			<if test="update_time != null">
+				update_time = #{updateTime}, 
+			</if>
+			<if test="img_url != null">
+				img_url = #{imgUrl}, 
+			</if>
+
+		</set>
+
+		where t.id = #{id}
+	</update>
+
+</mapper>

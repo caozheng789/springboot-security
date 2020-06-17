@@ -15,7 +15,9 @@ import java.util.Map;
 @Getter
 public class PluginPage<T> {
   private Integer pageNum = 1;
+  private Integer page = 1;
   private Integer pageSize = 10;
+  private Integer limit = 10;
   private String orderBy;
   private Map<String,Object> queryMap;
   private T t;
