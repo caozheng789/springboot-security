@@ -68,7 +68,7 @@ public class UploadServiceImpl implements UploadServiceI {
 			qiniu.setArea(getflag);
 			if (qinius.size() != 0){
 				//修改
-				String id = qinius.get(0).getId();
+				Integer id = qinius.get(0).getId();
 				qiniu.setId(id);
 				uploadSqlMapper.updateById(qiniu);
 			}else{

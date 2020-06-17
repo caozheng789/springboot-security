@@ -16,5 +16,7 @@ public interface ArticleServiceI {
 
 	ResultData getTopNRanks();
 
+    ResultData pusArticle(String title, String data);
+
 	ResultData putBlog(ArticleInfo article);
 }

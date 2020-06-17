@@ -37,9 +37,11 @@ public class RedisConfig {
 	@Bean("redisTemplate")
 	public RedisTemplate redisTemplate(@Lazy RedisConnectionFactory connectionFactory) {
 		RedisTemplate redis = new RedisTemplate();
+		//序列化
 		GenericToStringSerializer<String> keySerializer = new GenericToStringSerializer<String>(String.class);
 		redis.setKeySerializer(keySerializer);
 		redis.setHashKeySerializer(keySerializer);
+
 		GenericJackson2JsonRedisSerializer valueSerializer = new GenericJackson2JsonRedisSerializer();
 		redis.setValueSerializer(valueSerializer);
 		redis.setHashValueSerializer(valueSerializer);

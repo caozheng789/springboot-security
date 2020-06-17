@@ -8,7 +8,9 @@ import per.cz.security.entity.Permission;
 import java.util.List;
 
 /**
- * Created by Administrator on 2020/5/23.
+ *
+ * @author Administrator
+ * @date 2020/5/23
  */
 @Mapper
 public interface PermissionMapper extends BaseMapper<Permission> {

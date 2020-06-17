@@ -24,7 +24,7 @@ public class ArticleController {
 	private ArticleServiceI artService;
 
 	/**
-	 * 获取所有用户的时间线
+	 * 获取所有
 	 * @return
 	 */
 	@RequestMapping(value = "getArticles", method = RequestMethod.POST)
@@ -33,7 +33,7 @@ public class ArticleController {
 	}
 
 	/**
-	 * 根据id获取文章
+	 * 根据id获取
 	 * @return
 	 */
 	@GetMapping(value = "getArticleById")
@@ -43,7 +43,7 @@ public class ArticleController {
 
 
 	/**
-	 * 获取所有用户的时间线
+	 * 获取排行榜数据
 	 * @return
 	 */
 	@GetMapping(value = "getTopNRanks")
@@ -59,6 +59,12 @@ public class ArticleController {
 	@PostMapping("putBlog")
 	public ResultData putBlog(ArticleInfo article){
 		return artService.putBlog(article);
+	}
+
+
+	@PutMapping
+	public ResultData pusArticle(String title, String data){
+		return artService.pusArticle(title,data);
 	}
 
 
