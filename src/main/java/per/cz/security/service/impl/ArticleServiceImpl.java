@@ -33,7 +33,8 @@ public class ArticleServiceImpl implements ArticleServiceI {
 	private MenuMapper menuMapper;
 
 	@Autowired
-	private StringRedisTemplate redisTemplate;
+	private RankListComponent rankListComponent;
+
 
 	@Override
 	public ResultData getArticles(PluginPage<ArticleInfo> pluginPage) {
@@ -41,7 +42,8 @@ public class ArticleServiceImpl implements ArticleServiceI {
 		log.info("## 1. 获取所有文章 getArticles start ##");
 		List<ArticleInfo> list = null;
 		try {
-			IPage<ArticleInfo> userPage = new Page<>(pluginPage.getPageNum(), pluginPage.getPageSize());//参数一是当前页，参数二是每页个数
+			//参数一是当前页，参数二是每页个数
+			IPage<ArticleInfo> userPage = new Page<>(pluginPage.getPageNum(), pluginPage.getPageSize());
 			userPage = articleMapper.selectPage(userPage, null);
 			list = userPage.getRecords();
 			if (list.size() != 0){
@@ -77,8 +79,7 @@ public class ArticleServiceImpl implements ArticleServiceI {
 	}
 
 
-	@Autowired
-	private RankListComponent rankListComponent;
+
 
 	@Override
 	public ResultData getArticleById(Long artId) {
@@ -118,10 +119,12 @@ public class ArticleServiceImpl implements ArticleServiceI {
 			RankDto rankDto = new RankDto();
 			BeanUtil.copyNotNullBean(r,rankDto);
 			ArticleInfo articleInfo = articleMapper.selectById(r.getUserId());
-			rankDto.setTitle(articleInfo.getTitle());
-			//取出绝对值
-			rankDto.setScore(Math.abs(rankDto.getScore()));
-			dtos.add(rankDto);
+			if(null != articleInfo){
+				rankDto.setTitle(articleInfo.getTitle());
+				//取出绝对值
+				rankDto.setScore(Math.abs(rankDto.getScore()));
+				dtos.add(rankDto);
+			}
 		}
 		return ResultData.success(dtos);
 	}

@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -16,9 +15,7 @@ import org.springframework.stereotype.Service;
 import per.cz.security.entity.LoginUser;
 import per.cz.security.entity.Token;
 import per.cz.security.service.TokenService;
-import per.cz.security.util.BeanUtil;
 
-import javax.annotation.Resource;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
@@ -131,7 +128,8 @@ public class TokenServiceJWTImpl implements TokenService {
 	private Key getKeyInstance() {
 		if (KEY == null) {
 			synchronized (TokenServiceJWTImpl.class) {
-				if (KEY == null) {// 双重锁
+				// 双重锁
+				if (KEY == null) {
 					byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(jwtSecret);
 					KEY = new SecretKeySpec(apiKeySecretBytes, SignatureAlgorithm.HS256.getJcaName());
 				}
