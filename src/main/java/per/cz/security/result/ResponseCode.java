@@ -7,7 +7,7 @@ package per.cz.security.result;
 public enum  ResponseCode {
 
 	/** 成功 */
-	SUCCESS("10001", "成功"),
+	SUCCESS("0", "成功"),
 
 	/** 操作失败 */
 	ERROR("10002", "操作失败"),

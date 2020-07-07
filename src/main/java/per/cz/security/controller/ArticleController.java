@@ -2,14 +2,11 @@ package per.cz.security.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import per.cz.security.entity.ArticleInfo;
 import per.cz.security.entity.PluginPage;
 import per.cz.security.result.ResultData;
 import per.cz.security.service.ArticleServiceI;
-
-import java.util.Set;
 
 
 /**
