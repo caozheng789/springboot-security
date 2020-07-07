@@ -8,7 +8,7 @@ import com.qiniu.util.Auth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import per.cz.security.entity.Area;
+import per.cz.security.entity.emun.Area;
 import per.cz.security.entity.Qiniu;
 import per.cz.security.mapper.UploadMapper;
 import per.cz.security.result.ResultData;

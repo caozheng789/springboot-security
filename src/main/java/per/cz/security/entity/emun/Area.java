@@ -1,4 +1,4 @@
-package per.cz.security.entity;
+package per.cz.security.entity.emun;
 
 /**
  * 七牛云地区

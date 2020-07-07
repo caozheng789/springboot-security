@@ -183,6 +183,18 @@
             <version>${elasticsearch.version}</version>
         </dependency>
 
+        <!--腾讯短信sms-->
+        <dependency>
+            <groupId>com.github.qcloudsms</groupId>
+            <artifactId>qcloudsms</artifactId>
+            <version>1.0.6</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-core -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-core</artifactId>
+            <version>4.5.16</version>
+        </dependency>
 
 
 
